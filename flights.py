@@ -2,12 +2,20 @@
 import aiohttp
 import asyncio
 import requests
+from dotenv import load_dotenv
+import os
+
+# Load environment variables from the .env file (if present)
+load_dotenv()
+
+AMADEUS_CLIENT = os.getenv("AMADEUS_CLIENT")
+AMADEUS_SECRET = os.getenv("AMADEUS_SECRET")
 
 AUTH_ENDPOINT = "https://test.api.amadeus.com/v1/security/oauth2/token"
 headers = {"Content-Type": "application/x-www-form-urlencoded"}
 data = {"grant_type": "client_credentials",
-        "client_id": 'jDAqcIXkTpSL8lzLLYP2CY9piEe2Dg3W',
-        "client_secret": '96SDJZ1hUMBoqe6E'}
+        "client_id": AMADEUS_CLIENT,
+        "client_secret": AMADEUS_SECRET}
 response = requests.post(AUTH_ENDPOINT,
                         headers=headers,
                         data=data)

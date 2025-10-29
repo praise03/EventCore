@@ -3,7 +3,7 @@
 ![tag:hackathon](https://img.shields.io/badge/hackathon-5F43F1)
 
 
-[Chat with Event Assistant 🤖](https://agentverse.ai/inspect/?uri=http%3A//127.0.0.1%3A8005&address=agent1qg927dsj0llmc2e4yyr23fq5s7dwqjgg737hly75y6uu4r5dm04vwnvyced/profile)
+[Chat with Event Assistant 🤖](https://agentverse.ai/agents/details/agent1qgd9z8xc4yzh09zj5r5j962xcy8ktetpckunyqs9pf8n66df26t4yagkx7v/profile)
 
 # EventCore — Event Assistant RAG 🗺️🎟️
 

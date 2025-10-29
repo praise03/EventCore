@@ -23,8 +23,6 @@ from uagents_core.contrib.protocols.chat import (
     TextContent,
     chat_protocol_spec,
 )
-from uagents.experimental.quota import QuotaProtocol, RateLimit
-from uagents_core.models import ErrorMessage
 from helpers import categorize_prompt, extract_flight_routes, extract_hotel_data, extract_weather_data
 from currency_converter import fetch_exchange_rates
 from flights import fetch_offers

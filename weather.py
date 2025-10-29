@@ -10,8 +10,15 @@ interacting with the ASI1 API, though it is not used within this function.
 
 import requests, os
 import json
+from dotenv import load_dotenv
+import os
 
-asi1_api_key = "sk_d2913a2aa0d74896a958c6af8dcb0494e7cea7053fb945f1904f0452a307ed96"
+# Load environment variables from the .env file (if present)
+load_dotenv()
+
+ASI_1_API_KEY = os.getenv("ASI1_API_KEY")
+
+asi1_api_key = ASI_1_API_KEY
 
 ASI1_Endpoint = "https://api.asi1.ai/v1/chat/completions"
 
