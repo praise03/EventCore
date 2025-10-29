@@ -144,7 +144,7 @@ The EventRAG, traverses its knowledgebase to answer user prompt. It can also add
             data = new_answer
             print(f"[LEARNED] learned({safe_key}) → {data}")
 
-<details>
+</details>
 ---
 
 ---
