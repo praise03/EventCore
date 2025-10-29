@@ -8,6 +8,9 @@
 
 [Chat with Event Assistant 🤖](https://agentverse.ai/agents/details/agent1qgd9z8xc4yzh09zj5r5j962xcy8ktetpckunyqs9pf8n66df26t4yagkx7v/profile)
 
+Agent Address: agent1qgd9z8xc4yzh09zj5r5j962xcy8ktetpckunyqs9pf8n66df26t4yagkx7v
+Agent Name on Agentverse: EventCore
+
 # EventCore — Event Assistant RAG 🗺️🎟️
 
 ## 🏡 Project Overview
