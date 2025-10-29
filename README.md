@@ -12,7 +12,7 @@
 
 ## 🏡 Project Overview
 
-**EventCore** is a live, autonomous AI agent that answers real-time questions about IRL events by intelligently combining external API data with a self-learning symbolic knowledge graph powered by **MeTTa** and **ASI:One**. It fetches accurate and timely data from live sources while answering event-specific queries using its structured, queryable knowledge base, then generates clear, user-friendly responses from both **API** results and **RAG** outputs. EventCore learns from every user, ensuring fast, reliable, and evolving support for global builders.
+**EventCore** is a live, autonomous AI agent that answers real-time questions about IRL events by intelligently combining external API data with a self-learning symbolic knowledge graph powered by **MeTTa** and **ASI:One**. It fetches accurate and timely data from live sources while answering event-specific queries using its structured, queryable knowledge base, then generates clear, user-friendly responses from both **API** results and **RAG** outputs. EventCore learns from every user, ensuring fast, reliable, and evolving support for global attendees.
 
 ---
 
