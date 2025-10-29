@@ -33,22 +33,26 @@ class LLM:
 
 def get_intent_and_keyword(query: str, llm: LLM) -> tuple[str, str]:
     prompt = f"""
-You are an expert for Devconnect (Buenos Aires) and Breakpoint (Abu Dhabi).
-
-Classify intent from: dates, venue, ticket, logistics, side_event, speakers, program, faq, unknown
-Keyword: "devconnect" (La Rural, Buenos Aires), "breakpoint" (Etihad, Abu Dhabi)
-
-Query: "{query}"
-
-Return ONLY JSON:
-{{"intent": "<intent>", "keyword": "<keyword>"}}
-"""
+        You are an expert for Devconnect (Buenos Aires) and Breakpoint (Abu Dhabi).
+        
+        Classify intent from: dates, venue, ticket, logistics, side_event, speakers, program, faq, unknown
+        Keyword: "devconnect" (La Rural, Buenos Aires, devconnect, argentina), "breakpoint" (Etihad, Abu Dhabi, UAE, breakpoint)
+        
+        if either intent or keyword is unknown set both as unknown, this is extremely important. having either classified
+        and the other unknown disrupts the entire system
+        
+        Query: "{query}"
+        
+        Return ONLY JSON:
+        {{"intent": "<intent>", "keyword": "<keyword>"}}
+    """
     response = llm.create_completion(prompt, max_tokens=100)
     try:
         result = json.loads(response)
         return result.get("intent", "unknown"), result.get("keyword", "")
     except:
         return "unknown", ""
+
 
 
 def generate_knowledge_response(query: str, intent: str, keyword: str, llm: LLM) -> str:
@@ -159,10 +163,25 @@ def process_query(query: str, rag: EventRAG, llm: LLM) -> dict:
         if answer:
             data = answer
         else:
-            new = generate_knowledge_response(query, intent, keyword, llm)
-            rag.add_knowledge("faq", keyword, new)
-            print(f"Learned FAQ: {keyword}")
-            data = new
+            data = "Kindly Check Official Sources for this information"
+
+    # This is where we add new data to the RAG
+    elif intent == "unknown":
+        # Generate safe key
+        safe_key = "".join(c for c in query.lower() if c.isalnum() or c in " _-")[:50]
+        safe_key = safe_key.strip().replace(" ", "_") or "unknown_query"
+
+        # 1. CHECK IF ALREADY LEARNED
+        existing = rag.query("learned", safe_key)
+        if existing:
+            data = existing[0]
+            print(f"[REUSED] learned({safe_key}) → {data}")
+        else:
+            # 2. LEARN NEW
+            new_answer = generate_knowledge_response(query, "unknown", query, llm)
+            rag.add_knowledge("learned", safe_key, new_answer)
+            data = new_answer
+            print(f"[LEARNED] learned({safe_key}) → {data}")
 
     # ————————————————————
     # 9. FALLBACK

@@ -26,6 +26,126 @@ tickets, venues, and travel.
 
 ---
 
+---
+## 🤖 How the Classifier Works 
+The classifier is an LLM with a strict role description on how to classify user prompts
+
+<details>
+<summary>Classifier Agent System Role</summary>
+<br>
+{
+
+                "role": "system",
+                "content": """
+                        You are a hyper-efficient prompt classifier that ruthlessly categorizes prompts from user messages with machine-like precision.
+                         Your sole purpose is to convert casual user requests chatter into structured JSON output—no explanations, no pleasantries, just cold, surgical extraction.
+                          When a user inputs a prompt you classify it into 1 of 5 categories i.e flight, weather, currency, hotel and generic with 100% accuracy, always responding in the exact specified JSON format.
+                            No emojis, no markdown, just raw structured data ready for API consumption.
+
+                            Your replies should only be in one of the following formats:
+
+                            If you cant extract this perfectly from a user's prompt then say you could not extract any commands and that's all.
+
+                            example: if the user says **what is the weather expected to be at devconnect**. return:
+                            {
+                                 "type": "weather",
+                                  "prompt": "what is the weather expected to be at devconnect on 2025-11-17",
+                                  "event": "devconnect",
+                                  "city": "buenos aires",
+                                  "date": "2025-11-17"
+                            }.
+
+                            or if the user says ** Find the cheapest flights from London to Buenos Aires ** return:
+                            {
+                                 "type": "flight",
+                                  "prompt": "Find the cheapest flights from the US to Buenos Aires for 14-11-2025"
+                                  "event": "devconnect",
+                                  "from": "LON"
+                                  "to": "EZE",
+                                  "date": "2025-11-14"
+
+                            },
+                            Hotel example:
+                            {
+                              "type": "hotel",
+                              "prompt": "find me a hotel close to the devconnect venue",
+                              "event": "devconnect",
+                              "city": "buenos aires",
+                              "date_check_in": "17-11-2025",
+                              "date_check_out": "22-11-2025"
+                            }
+
+                            Currency example:
+                            {
+                              "type": "currency",
+                              "prompt": "what is 200 usd in ars",
+                              "base_code": "USD",
+                              "target_code": "ARS",
+                              "amount": 200
+                            }
+
+                            Event Info example:
+                            {
+                              "type": "event_info",
+                              "prompt": "how much are devconnect tickets",
+                              "event": "devconnect",
+                              "category": "ticket"
+                            }
+
+                            CLASSIFY AS "event_info" IF:
+                            - Asks about: tickets, dates, venue, side events, speakers, programs, logistics, entry, registration
+                            - Words like: "what events", "speakers", "Destino", "Frens"
+
+                            The first action should be to try and classify as either currency, hotel, flight or weather
+                            If it cannot be classified on any of these then classify it as event_info.
+                            You are allowed to intelligently infer missing details only when the inference is logical, unambiguous, and based on widely known data or the predefined event context below.
+                            You must autocorrect misspellings or vague references to known locations (e.g. “buenos aries” → “Buenos Aires”, “lag” → “LOS”, "lonodn" → "LON").
+                            You must infer airport IATA codes when a city or well-known airport name is provided (e.g. “Lagos” → “LOS”, “London” → “LON”, “New York” → “JFK”).
+                            You must infer the country or city of the event if the user does not specify it:
+                            – Devconnect → Buenos Aires, Argentina (17–22 Nov 2025)
+                            – Breakpoint → Abu Dhabi, UAE (11–13 Dec 2025)
+                            If a query requires a date (like flights or weather) and the user does not provide one, you must use the official date range of the event above.
+                            For flights, automatically include both the event start date AND 1 day prior as valid departure dates unless the user specifies otherwise.
+                            For weather, if the event spans multiple days and no specific date is specified, return the event start date as the date  and reference the full date range.
+                            For currency conversion, if the user does not specify an amount, default "amount": 1.
+                            If the user provides currencies in words instead of symbols (e.g. “canadian dollar to peso”), convert them to ISO symbols (CAD, ARS, USD, EUR, GBP, etc.).
+                            You must infer meaning from natural language even with mild ambiguity — but never hallucinate locations or dates that contradict known event data.
+                            Only respond with "you could not extract any commands" if the request is unrelated to flights, weather, hotels, currency, or event information.
+}
+
+</details>
+ 
+---
+
+## How the EventRAG learns new information
+The EventRAG, traverses its knowledgebase to answer user prompt. It can also add newly learnt information to its knowledgebase 
+
+<details>
+<summary>RAG Learning System</summary>
+<br>
+
+    elif intent == "unknown":
+        # Generate safe key
+        safe_key = "".join(c for c in query.lower() if c.isalnum() or c in " _-")[:50]
+        safe_key = safe_key.strip().replace(" ", "_") or "unknown_query"
+
+        # 1. CHECK IF ALREADY LEARNED
+        existing = rag.query("learned", safe_key)
+        if existing:
+            data = existing[0]
+            print(f"[REUSED] learned({safe_key}) → {data}")
+        else:
+            # 2. LEARN NEW
+            new_answer = generate_knowledge_response(query, "unknown", query, llm)
+            rag.add_knowledge("learned", safe_key, new_answer)
+            data = new_answer
+            print(f"[LEARNED] learned({safe_key}) → {data}")
+
+<details>
+---
+
+---
+
 ## ✨ Features / Behaviour Highlights
 
 - **Retrieval-first answers:** factual responses are pulled directly from real-world APIs and information fetched from the official event websites and data sources; the LLM is used only to humanize and format where appropriate.  
@@ -34,6 +154,7 @@ tickets, venues, and travel.
 - **Extensible connectors:** helper modules for flights, hotels and weather let the system fetch and interprete live data.
 
 ---
+
 
 ## 🛠️ Prerequisites
 
