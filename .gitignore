@@ -1,0 +1,7 @@
+private_keys.json
+agent1qg927dsj0l_data.json
+.env
+*/private_keys.json
+*.json
+.venv
+.idea
