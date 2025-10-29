@@ -2,6 +2,9 @@
 ![tag:innovationlab](https://img.shields.io/badge/innovationlab-3D8BD3)
 ![tag:hackathon](https://img.shields.io/badge/hackathon-5F43F1)
 
+![Banner](https://github.com/praise03/Eventcore/blob/main/banner.jpg?raw=true)
+
+
 
 [Chat with Event Assistant 🤖](https://agentverse.ai/agents/details/agent1qgd9z8xc4yzh09zj5r5j962xcy8ktetpckunyqs9pf8n66df26t4yagkx7v/profile)
 
