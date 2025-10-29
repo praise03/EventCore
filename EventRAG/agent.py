@@ -57,7 +57,7 @@ def create_text_chat(text: str) -> ChatMessage:
 metta = MeTTa()
 initialize_knowledge_graph(metta)
 rag = EventRAG(metta)
-llm = LLM(api_key=os.getenv("ASI_ONE_API_KEY"))
+llm = LLM(api_key=os.getenv("ASI1_API_KEY"))
 
 # Protocol setup
 chat_proto = Protocol(spec=chat_protocol_spec)

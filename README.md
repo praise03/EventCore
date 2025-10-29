@@ -281,3 +281,5 @@ To add facts:
 - Uses Fetch.ai uAgents, Hyperon/MeTTa and ASI:One (OpenAI‑compatible) prompts. Please comply with upstream license & API terms.
 
 ---
+
+Demo Video: https://drive.google.com/file/d/1qVItJjkPs1pirdX8Rxm2EeI22H0M7z7U/view?usp=sharing

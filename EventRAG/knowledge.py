@@ -75,15 +75,19 @@ def initialize_knowledge_graph(metta: MeTTa):
     # ----------------------------
     # (include representative side events listed on the calendar)
     metta.space().add_atom(
-        E(S("side_event"), S("staking_summit"), ValueAtom("Nov 15-16 — Staking Summit (tickets required)")))
+        E(S("side_event"), S("devconnect"), ValueAtom("Nov 15-16 — Staking Summit (tickets required)")))
     metta.space().add_atom(
-        E(S("side_event"), S("hyperliquid_hackathon"), ValueAtom("Nov 15-16 — Hyperliquid Hackathon (looping 24h)")))
+        E(S("side_event"), S("devconnect"), ValueAtom("Nov 15-16 — Hyperliquid Hackathon (looping 24h)")))
     metta.space().add_atom(
-        E(S("side_event"), S("crecimiento_startup_worldcup"), ValueAtom("Nov 15-16 — Crecimiento Startup Worldcup")))
-    metta.space().add_atom(E(S("side_event"), S("governance_day"), ValueAtom("Nov 15 — Governance Day (Main)")))
+        E(S("side_event"), S("devconnect"), ValueAtom("Nov 15-16 — Crecimiento Startup Worldcup")))
+    metta.space().add_atom(E(S("devconnect"), S("governance_day"), ValueAtom("Nov 15 — Governance Day (Main)")))
 
     # Ethereum Day mention (Devconnect site has an Ethereum Day page)
     metta.space().add_atom(E(S("related_day"), S("devconnect"), S("ethereum_day")))
+
+    metta.space().add_atom(E(S("side_event"), S("breakpoint"), S("BitcoinMea")))
+    metta.space().add_atom(E(S("side_event"), S("breakpoint"), S("Abu Dhabi Finance Week")))
+    metta.space().add_atom(E(S("side_event"), S("breakpoint"), S("Community Mural Day")))
 
     # ----------------------------
     # Destino / Access & Scholarships (Devconnect)
