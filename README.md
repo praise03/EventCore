@@ -2,7 +2,7 @@
 ![tag:innovationlab](https://img.shields.io/badge/innovationlab-3D8BD3)
 ![tag:hackathon](https://img.shields.io/badge/hackathon-5F43F1)
 
-![Banner](https://github.com/praise03/Eventcore/blob/main/banner.jpg?raw=true)
+![Banner](https://github.com/praise03/Eventcore/blob/main/banner2.jpg?raw=true)
 
 
 
